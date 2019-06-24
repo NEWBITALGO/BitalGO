@@ -1,0 +1,11 @@
+[Protocol]
+exec=BitalGo-qt '%u'
+protocol=BitalGo
+input=none
+output=none
+helper=true
+listing=
+reading=false
+writing=false
+makedir=false
+deleting=false

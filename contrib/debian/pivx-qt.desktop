@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=Stakniglab Core
+Comment=ALG P2P Cryptocurrency
+Comment[fr]=ALG, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=ALG, eşten eşe kriptografik sanal para birimi
+Exec=BitalGo-qt %u
+Terminal=false
+Type=Application
+Icon=BitalGo128
+MimeType=x-scheme-handler/BitalGo;
+Categories=Office;Finance;
+StartupWMClass=BitalGo-qt

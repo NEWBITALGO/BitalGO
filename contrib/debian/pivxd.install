@@ -1,0 +1,3 @@
+usr/local/bin/BitalGod usr/bin
+usr/local/bin/BitalGo-cli usr/bin
+debian/examples/BitalGo.conf etc/BitalGo
