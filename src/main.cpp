@@ -7,8 +7,8 @@
 
 #include "main.h"
 
-#include "zpiv/accumulators.h"
-#include "zpiv/accumulatormap.h"
+#include "zALG/accumulators.h"
+#include "zALG/accumulatormap.h"
 #include "addrman.h"
 #include "alert.h"
 #include "blocksignature.h"
@@ -33,10 +33,10 @@
 #include "util.h"
 #include "utilmoneystr.h"
 #include "validationinterface.h"
-#include "zpivchain.h"
+#include "zALGchain.h"
 #include "devfee.h"
 
-#include "zpiv/zerocoin.h"
+#include "zALG/zerocoin.h"
 #include "libzerocoin/Denominations.h"
 #include "invalid.h"
 #include <sstream>
@@ -85,7 +85,7 @@ bool fClearSpendCache = false;
 unsigned int nStakeMinAge = 60 * 60;
 int64_t nReserveBalance = 0;
 
-/** Fees smaller than this (in upiv) are considered zero fee (for relaying and mining)
+/** Fees smaller than this (in uALG) are considered zero fee (for relaying and mining)
  * We are ~100 times smaller then bitcoin now (2015-06-23), set minRelayTxFee only 10 times higher
  * so it's still 10 times lower comparing to bitcoin.
  */
@@ -1362,7 +1362,7 @@ bool AcceptToMemoryPool(CTxMemPool& pool, CValidationState& state, const CTransa
                 CoinSpend spend = TxInToZerocoinSpend(txIn);
                 if (!ContextualCheckZerocoinSpend(tx, spend, chainActive.Tip(), 0))
                     return state.Invalid(error("%s: ContextualCheckZerocoinSpend failed for tx %s", __func__,
-                                               tx.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zpiv");
+                                               tx.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zALG");
             }
         } else {
             LOCK(pool.cs);
@@ -4398,17 +4398,17 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
         CTransaction &stakeTxIn = block.vtx[1];
 
         // Inputs
-        std::vector<CTxIn> pivInputs;
+        std::vector<CTxIn> ALGInputs;
         std::vector<CTxIn> zALGInputs;
 
         for (const CTxIn& stakeIn : stakeTxIn.vin) {
             if(stakeIn.scriptSig.IsZerocoinSpend()){
                 zALGInputs.push_back(stakeIn);
             }else{
-                pivInputs.push_back(stakeIn);
+                ALGInputs.push_back(stakeIn);
             }
         }
-        const bool hasALGInputs = !pivInputs.empty();
+        const bool hasALGInputs = !ALGInputs.empty();
         const bool hasZALGInputs = !zALGInputs.empty();
 
         // ZC started after PoS.
@@ -4431,8 +4431,8 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
                 if(tx.IsCoinStake()) continue;
                 if(hasALGInputs)
                     // Check if coinstake input is double spent inside the same block
-                    for (const CTxIn& pivIn : pivInputs){
-                        if(pivIn.prevout == in.prevout){
+                    for (const CTxIn& ALGIn : ALGInputs){
+                        if(ALGIn.prevout == in.prevout){
                             // double spent coinstake input inside block
                             return error("%s: double spent coinstake input inside block", __func__);
                         }
@@ -4468,7 +4468,7 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
                 for (const CTransaction& t : bl.vtx) {
                     for (const CTxIn& in: t.vin) {
                         // Loop through every input of the staking tx
-                        for (const CTxIn& stakeIn : pivInputs) {
+                        for (const CTxIn& stakeIn : ALGInputs) {
                             // if it's already spent
 
                             // First regular staking check
@@ -4516,7 +4516,7 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
 
                     if (!ContextualCheckZerocoinSpendNoSerialCheck(stakeTxIn, spend, pindex, 0))
                         return state.DoS(100,error("%s: forked chain ContextualCheckZerocoinSpend failed for tx %s", __func__,
-                                                   stakeTxIn.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zpiv");
+                                                   stakeTxIn.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zALG");
 
                     // Now only the ZKP left..
                     // As the spend maturity is 200, the acc value must be accumulated, otherwise it's not ready to be spent
@@ -4564,7 +4564,7 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
                         CoinSpend spend = TxInToZerocoinSpend(zPivInput);
                         if (!ContextualCheckZerocoinSpend(stakeTxIn, spend, pindex, 0))
                             return state.DoS(100,error("%s: main chain ContextualCheckZerocoinSpend failed for tx %s", __func__,
-                                    stakeTxIn.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zpiv");
+                                    stakeTxIn.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zALG");
                 }
 
         }
@@ -6373,7 +6373,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv, 
                 CBigNum bnAccValue = 0;
                 //std::cout << "asking for checkpoint value in height: " << height << ", den: " << den << std::endl;
                 if (!GetAccumulatorValue(height, den, bnAccValue)) {
-                    LogPrint("zpiv", "peer misbehaving for request an invalid acc checkpoint \n", __func__);
+                    LogPrint("zALG", "peer misbehaving for request an invalid acc checkpoint \n", __func__);
                     Misbehaving(pfrom->GetId(), 50);
                 } else {
                     //std::cout << "Sending acc value, with checksum: " << GetChecksum(bnAccValue) << " for "
@@ -6398,7 +6398,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv, 
                 gen.setPfrom(pfrom);
                 if (gen.isValid(chainActive.Height())) {
                     if (!lightWorker.addWitWork(gen)) {
-                        LogPrint("zpiv", "%s : add genwit request failed \n", __func__);
+                        LogPrint("zALG", "%s : add genwit request failed \n", __func__);
                         CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
                         // Invalid request only returns the message without a result.
                         ss << gen.getRequestNum();

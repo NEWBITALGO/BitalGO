@@ -12,7 +12,7 @@
 #include "util.h"
 #include "stakeinput.h"
 #include "utilmoneystr.h"
-#include "zpivchain.h"
+#include "zALGchain.h"
 
 using namespace std;
 
@@ -378,9 +378,9 @@ bool CheckProofOfStake(const CBlock block, uint256& hashProofOfStake, std::uniqu
         if (!VerifyScript(txin.scriptSig, txPrev.vout[txin.prevout.n].scriptPubKey, STANDARD_SCRIPT_VERIFY_FLAGS, TransactionSignatureChecker(&tx, 0)))
             return error("CheckProofOfStake() : VerifySignature failed on coinstake %s", tx.GetHash().ToString().c_str());
 
-        CPivStake* pivInput = new CPivStake();
-        pivInput->SetInput(txPrev, txin.prevout.n);
-        stake = std::unique_ptr<CStakeInput>(pivInput);
+        CPivStake* ALGInput = new CPivStake();
+        ALGInput->SetInput(txPrev, txin.prevout.n);
+        stake = std::unique_ptr<CStakeInput>(ALGInput);
     }
 
     CBlockIndex* pindex = stake->GetIndexFrom();

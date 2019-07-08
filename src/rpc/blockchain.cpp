@@ -14,10 +14,10 @@
 #include "txdb.h"
 #include "util.h"
 #include "utilmoneystr.h"
-#include "zpiv/accumulatormap.h"
-#include "zpiv/accumulators.h"
+#include "zALG/accumulatormap.h"
+#include "zALG/accumulators.h"
 #include "wallet.h"
-#include "zpivchain.h"
+#include "zALGchain.h"
 #include <stdint.h>
 #include <fstream>
 #include <iostream>
@@ -136,12 +136,12 @@ UniValue blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool tx
 
     result.push_back(Pair("moneysupply",ValueFromAmount(blockindex->nMoneySupply)));
 
-    UniValue zpivObj(UniValue::VOBJ);
+    UniValue zALGObj(UniValue::VOBJ);
     for (auto denom : libzerocoin::zerocoinDenomList) {
-        zpivObj.push_back(Pair(to_string(denom), ValueFromAmount(blockindex->mapZerocoinSupply.at(denom) * (denom*COIN))));
+        zALGObj.push_back(Pair(to_string(denom), ValueFromAmount(blockindex->mapZerocoinSupply.at(denom) * (denom*COIN))));
     }
-    zpivObj.push_back(Pair("total", ValueFromAmount(blockindex->GetZerocoinSupply())));
-    result.push_back(Pair("zALGsupply", zpivObj));
+    zALGObj.push_back(Pair("total", ValueFromAmount(blockindex->GetZerocoinSupply())));
+    result.push_back(Pair("zALGsupply", zALGObj));
 
     return result;
 }

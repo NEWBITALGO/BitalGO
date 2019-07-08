@@ -174,20 +174,20 @@ BITCOIN_CORE_H = \
   wallet.h \
   wallet_ismine.h \
   walletdb.h \
-  zpivchain.h \
-  zpiv/accumulators.h \
-  zpiv/accumulatorcheckpoints.h \
-  zpiv/accumulatorcheckpoints.json.h \
-  zpiv/accumulatormap.h \
-  zpiv/deterministicmint.h \
-  zpiv/mintpool.h \
-  zpiv/witness.h \
-  zpiv/zerocoin.h \
-  zpiv/zpivtracker.h \
-  zpiv/zpivwallet.h \
+  zALGchain.h \
+  zALG/accumulators.h \
+  zALG/accumulatorcheckpoints.h \
+  zALG/accumulatorcheckpoints.json.h \
+  zALG/accumulatormap.h \
+  zALG/deterministicmint.h \
+  zALG/mintpool.h \
+  zALG/witness.h \
+  zALG/zerocoin.h \
+  zALG/zALGtracker.h \
+  zALG/zALGwallet.h \
   genwit.h \
   concurrentqueue.h \
-  lightzpivthread.h \
+  lightzALGthread.h \
   zmq/zmqabstractnotifier.h \
   zmq/zmqconfig.h \
   zmq/zmqnotificationinterface.h \
@@ -236,7 +236,7 @@ libbitcoin_server_a_SOURCES = \
   txdb.cpp \
   txmempool.cpp \
   validationinterface.cpp \
-  zpivchain.cpp \
+  zALGchain.cpp \
   devfee.cpp \
   $(BITCOIN_CORE_H)
 
@@ -269,21 +269,21 @@ libbitcoin_wallet_a_SOURCES = \
   masternodeconfig.cpp \
   masternodeman.cpp \
   rpcdump.cpp \
-  zpiv/deterministicmint.cpp \
-  zpiv/zerocoin.cpp \
+  zALG/deterministicmint.cpp \
+  zALG/zerocoin.cpp \
   rpcwallet.cpp \
   kernel.cpp \
   wallet.cpp \
   wallet_ismine.cpp \
   walletdb.cpp \
-  zpiv/accumulators.cpp \
-  zpiv/mintpool.cpp \
-  zpiv/witness.cpp \
-  zpiv/zpivwallet.cpp \
-  zpiv/zpivtracker.cpp \
+  zALG/accumulators.cpp \
+  zALG/mintpool.cpp \
+  zALG/witness.cpp \
+  zALG/zALGwallet.cpp \
+  zALG/zALGtracker.cpp \
   stakeinput.cpp \
   genwit.cpp \
-  lightzpivthread.cpp \
+  lightzALGthread.cpp \
   $(BITCOIN_CORE_H)
 
 # crypto primitives library
@@ -352,9 +352,9 @@ libzerocoin_libbitcoin_zerocoin_a_SOURCES = \
 libbitcoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_common_a_SOURCES = \
-  zpiv/accumulators.cpp \
-  zpiv/accumulatorcheckpoints.cpp \
-  zpiv/accumulatormap.cpp \
+  zALG/accumulators.cpp \
+  zALG/accumulatorcheckpoints.cpp \
+  zALG/accumulatormap.cpp \
   allocators.cpp \
   amount.cpp \
   base58.cpp \
@@ -363,9 +363,9 @@ libbitcoin_common_a_SOURCES = \
   coins.cpp \
   compressor.cpp \
   primitives/block.cpp \
-  zpiv/deterministicmint.cpp \
+  zALG/deterministicmint.cpp \
   primitives/transaction.cpp \
-  zpiv/zerocoin.cpp \
+  zALG/zerocoin.cpp \
   core_read.cpp \
   core_write.cpp \
   hash.cpp \

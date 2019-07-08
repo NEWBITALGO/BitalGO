@@ -17,14 +17,14 @@
 #include "main.h"
 #include "primitives/block.h"
 #include "primitives/transaction.h"
-#include "zpiv/zerocoin.h"
+#include "zALG/zerocoin.h"
 #include "ui_interface.h"
 #include "util.h"
 #include "validationinterface.h"
 #include "wallet_ismine.h"
 #include "walletdb.h"
-#include "zpiv/zpivwallet.h"
-#include "zpiv/zpivtracker.h"
+#include "zALG/zALGwallet.h"
+#include "zALG/zALGtracker.h"
 
 #include <algorithm>
 #include <map>
@@ -45,7 +45,7 @@ extern bool bSpendZeroConfChange;
 extern bool bdisableSystemnotifications;
 extern bool fSendFreeTransactions;
 extern bool fPayAtLeastCustomFee;
-extern bool fGlobalUnlockSpendCache; // Bool used for letting the precomputing thread know that zpivspends need to use the cs_spendcache
+extern bool fGlobalUnlockSpendCache; // Bool used for letting the precomputing thread know that zALGspends need to use the cs_spendcache
 
 //! -paytxfee default
 static const CAmount DEFAULT_TRANSACTION_FEE = 0;
@@ -227,7 +227,7 @@ public:
     bool DatabaseMint(CDeterministicMint& dMint);
     bool SetMintUnspent(const CBigNum& bnSerial);
     bool UpdateMint(const CBigNum& bnValue, const int& nHeight, const uint256& txid, const libzerocoin::CoinDenomination& denom);
-    string GetUniqueWalletBackupName(bool fzpivAuto) const;
+    string GetUniqueWalletBackupName(bool fzALGAuto) const;
     void InitAutoConvertAddresses();
 
 
@@ -252,7 +252,7 @@ public:
     bool fWalletUnlockAnonymizeOnly;
     std::string strWalletFile;
     bool fBackupMints;
-    std::unique_ptr<CzALGTracker> zpivTracker;
+    std::unique_ptr<CzALGTracker> zALGTracker;
 
     std::set<int64_t> setKeyPool;
     std::map<CKeyID, CKeyMetadata> mapKeyMetadata;
@@ -340,7 +340,7 @@ public:
     void setZWallet(CzALGWallet* zwallet)
     {
         zwalletMain = zwallet;
-        zpivTracker = std::unique_ptr<CzALGTracker>(new CzALGTracker(strWalletFile));
+        zALGTracker = std::unique_ptr<CzALGTracker>(new CzALGTracker(strWalletFile));
     }
 
     CzALGWallet* getZWallet() { return zwalletMain; }
