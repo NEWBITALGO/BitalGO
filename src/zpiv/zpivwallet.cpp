@@ -2,14 +2,14 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "zALGwallet.h"
+#include "zpivwallet.h"
 #include "main.h"
 #include "txdb.h"
 #include "walletdb.h"
 #include "init.h"
 #include "wallet.h"
 #include "deterministicmint.h"
-#include "zALGchain.h"
+#include "zpivchain.h"
 
 using namespace libzerocoin;
 
@@ -21,7 +21,7 @@ CzALGWallet::CzALGWallet(std::string strWalletFile)
     uint256 hashSeed;
     bool fFirstRun = !walletdb.ReadCurrentSeedHash(hashSeed);
 
-    //Check for old db version of storing zALG seed
+    //Check for old db version of storing zpiv seed
     if (fFirstRun) {
         uint256 seed;
         if (walletdb.ReadZALGSeed_deprecated(seed)) {
@@ -33,7 +33,7 @@ CzALGWallet::CzALGWallet(std::string strWalletFile)
                     LogPrintf("%s: Updated zALG seed databasing\n", __func__);
                     fFirstRun = false;
                 } else {
-                    LogPrintf("%s: failed to remove old zALG seed\n", __func__);
+                    LogPrintf("%s: failed to remove old zpiv seed\n", __func__);
                 }
             }
         }
@@ -55,7 +55,7 @@ CzALGWallet::CzALGWallet(std::string strWalletFile)
         key.MakeNewKey(true);
         seed = key.GetPrivKey_256();
         seedMaster = seed;
-        LogPrintf("%s: first run of zALG wallet detected, new seed generated. Seedhash=%s\n", __func__, Hash(seed.begin(), seed.end()).GetHex());
+        LogPrintf("%s: first run of zpiv wallet detected, new seed generated. Seedhash=%s\n", __func__, Hash(seed.begin(), seed.end()).GetHex());
     } else if (!pwalletMain->GetDeterministicSeed(hashSeed, seed)) {
         LogPrintf("%s: failed to get deterministic seed for hashseed %s\n", __func__, hashSeed.GetHex());
         return;
@@ -203,7 +203,7 @@ void CzALGWallet::SyncWithChain(bool fGenerateMintPool)
             if (ShutdownRequested())
                 return;
 
-            if (pwalletMain->zALGTracker->HasPubcoinHash(pMint.first)) {
+            if (pwalletMain->zpivTracker->HasPubcoinHash(pMint.first)) {
                 mintPool.Remove(pMint.first);
                 continue;
             }
@@ -326,8 +326,8 @@ bool CzALGWallet::SetMintSeen(const CBigNum& bnValue, const int& nHeight, const 
         pwalletMain->AddToWallet(wtx);
     }
 
-    // Add to zALGTracker which also adds to database
-    pwalletMain->zALGTracker->Add(dMint, true);
+    // Add to zpivTracker which also adds to database
+    pwalletMain->zpivTracker->Add(dMint, true);
 
     //Update the count if it is less than the mint's count
     if (nCountLastUsed < pMint.second) {

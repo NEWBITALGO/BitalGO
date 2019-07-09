@@ -29,10 +29,10 @@
   <string>????</string>
 
   <key>CFBundleExecutable</key>
-  <string>BitalGo-Qt</string>
+  <string>ALG-Qt</string>
   
   <key>CFBundleName</key>
-  <string>BitalGo-Qt</string>
+  <string>ALG-Qt</string>
 
   <key>LSHasLocalizedDisplayName</key>
   <true/>

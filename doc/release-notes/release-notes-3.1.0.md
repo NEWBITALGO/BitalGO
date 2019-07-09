@@ -15,7 +15,7 @@ Users updating from a previous version after Tuesday, May 8, 2018 12:00:00 AM GM
 How to Upgrade
 ==============
 
-If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/BitalGo-Qt (on Mac) or BitalGod/BitalGo-qt (on Linux).
+If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/ALG-Qt (on Mac) or BitalGod/BitalGo-qt (on Linux).
 
 
 Compatibility
@@ -115,7 +115,7 @@ Backup to external devices / locations
 
  The ALG wallet can now have user selected directories for automatic backups of the wallet data file (wallet.dat). This can be set by adding the following lines to the BitalGo.conf file, found in the ALG data directory.
 - backuppath = <directory / full path>
-- zALGbackuppath = <directory / full path>
+- zpivbackuppath = <directory / full path>
 - custombackupthreshold = <backup limit>
 Note: System write permissions must be appropriate for the location the wallet is being saved to.
 
@@ -127,7 +127,7 @@ Note: System write permissions must be appropriate for the location the wallet i
 ### Details:
 
 * If path is set to directory, the backup will be named `wallet.dat-<year>-<month>-<day>-<hour>-<minute>-<second>`
-* If zALG backup, auto generated name is `wallet-autozALGbackup.dat-<year>-<month>-<day>-<hour>-<minute>-<second>`
+* If zALG backup, auto generated name is `wallet-autozpivbackup.dat-<year>-<month>-<day>-<hour>-<minute>-<second>`
 * If path set to file, backup will be named `<filename>.dat`
 * walletbackupthreshold enables the user to select the maximum count of backup files to be written before overwriting existing backups.
 
@@ -251,8 +251,8 @@ Minor Enhancements
 -	Enforced v1 zALG spends to require a security level of 100
 -	Updates to zALG spends to avoid segfaults
 -	Updates to configuration will now reflect on the privacy tab
--	Fixed a  bug that would not start masternodes from the BitalGo-Qt masternodes tab
--	Updated BitalGo-Qt tooltips
+-	Fixed a  bug that would not start masternodes from the ALG-Qt masternodes tab
+-	Updated ALG-Qt tooltips
 -	Icon added to the wallet GUI to reflect the status of autominting (active / inactive)
 -	Updated errors causing the blockchain to corrupt when experiencing unexpected wallet shutdowns
 -	Updated RPC help outputs & removed the deprecated obfuscation. 

@@ -17,7 +17,7 @@ BitalGo Core v2.3.0 is a mandatory update for all users. This release contains v
 How to Upgrade
 --------------
 
-If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/BitalGo-Qt (on Mac) or BitalGod/BitalGo-qt (on Linux).
+If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/ALG-Qt (on Mac) or BitalGod/BitalGo-qt (on Linux).
 
 
 Compatibility

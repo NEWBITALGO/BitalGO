@@ -10,7 +10,7 @@
 
 #include <atomic>
 #include "genwit.h"
-#include "zALG/accumulators.h"
+#include "zpiv/accumulators.h"
 #include "concurrentqueue.h"
 #include "chainparams.h"
 #include <boost/function.hpp>
@@ -51,12 +51,12 @@ public:
         return true;
     }
 
-    void StartLightZALGThread(boost::thread_group& threadGroup) {
+    void StartLightZpivThread(boost::thread_group& threadGroup) {
         LogPrintf("%s thread start\n", "BitalGo-light-thread");
         threadIns = boost::thread(boost::bind(&CLightWorker::ThreadLightZALGSimplified, this));
     }
 
-    void StopLightZALGThread() {
+    void StopLightZpivThread() {
         threadIns.interrupt();
         LogPrintf("%s thread interrupted\n", "BitalGo-light-thread");
     }

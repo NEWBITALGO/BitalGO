@@ -10,7 +10,7 @@
 #include "init.h"
 #include "spork.h"
 #include "accumulatorcheckpoints.h"
-#include "zALGchain.h"
+#include "zpivchain.h"
 #include "tinyformat.h"
 
 using namespace libzerocoin;
