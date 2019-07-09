@@ -1467,7 +1467,7 @@ Address: %4
     </message>
     <message>
         <location line="+8"/>
-        <source>Can vary +/- %1 uALG per input.</source>
+        <source>Can vary +/- %1 upiv per input.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6518,7 +6518,7 @@ Please be patient...</source>
 <context>
     <name>ZPivControlDialog</name>
     <message>
-        <location filename="../forms/zALGcontroldialog.ui" line="+20"/>
+        <location filename="../forms/zpivcontroldialog.ui" line="+20"/>
         <source>Select zALG to Spend</source>
         <translation type="unfinished"></translation>
     </message>

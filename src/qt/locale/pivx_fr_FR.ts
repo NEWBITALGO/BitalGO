@@ -1130,8 +1130,8 @@ Adresse : %4
         <translation>Ce label devient rouge si l'un des destinataires reçoit un montant inférieur à %1.</translation>
     </message>
     <message>
-        <source>Can vary +/- %1 uALG per input.</source>
-        <translation>Peut varier de +/- %1 uALG par entrée.</translation>
+        <source>Can vary +/- %1 upiv per input.</source>
+        <translation>Peut varier de +/- %1 upiv par entrée.</translation>
     </message>
     <message>
         <source>(no label)</source>

@@ -7,16 +7,16 @@
 #include "chainparams.h"
 #include "main.h"
 #include "txdb.h"
-#include "zALG/deterministicmint.h"
+#include "zpiv/deterministicmint.h"
 #include "key.h"
-#include "zALG/accumulatorcheckpoints.h"
+#include "zpiv/accumulatorcheckpoints.h"
 #include "libzerocoin/bignum.h"
 #include <boost/test/unit_test.hpp>
 #include <iostream>
-#include <zALG/accumulators.h>
+#include <zpiv/accumulators.h>
 #include "wallet.h"
-#include "zALG/zALGwallet.h"
-#include "zALGchain.h"
+#include "zpiv/zpivwallet.h"
+#include "zpivchain.h"
 
 using namespace libzerocoin;
 

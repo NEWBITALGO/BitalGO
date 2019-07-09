@@ -17,13 +17,13 @@
 #include "utilmoneystr.h"
 #include "wallet.h"
 #include "walletdb.h"
-#include "zALGchain.h"
+#include "zpivchain.h"
 
 #include <stdint.h>
 
 #include "libzerocoin/Coin.h"
 #include "spork.h"
-#include "zALG/deterministicmint.h"
+#include "zpiv/deterministicmint.h"
 #include <boost/assign/list_of.hpp>
 #include <boost/thread/thread.hpp>
 
@@ -2612,7 +2612,7 @@ UniValue listmintedzerocoins(const UniValue& params, bool fHelp)
     EnsureWalletIsUnlocked(true);
 
     CWalletDB walletdb(pwalletMain->strWalletFile);
-    set<CMintMeta> setMints = pwalletMain->zALGTracker->ListMints(true, fMatureOnly, true);
+    set<CMintMeta> setMints = pwalletMain->zpivTracker->ListMints(true, fMatureOnly, true);
 
     int nBestHeight = chainActive.Height();
 
@@ -2636,7 +2636,7 @@ UniValue listmintedzerocoins(const UniValue& params, bool fHelp)
                     uint256 hashStake = mint.GetSerialNumber().getuint256();
                     hashStake = Hash(hashStake.begin(), hashStake.end());
                     m.hashStake = hashStake;
-                    pwalletMain->zALGTracker->UpdateState(m);
+                    pwalletMain->zpivTracker->UpdateState(m);
                 }
             }
             objMint.push_back(Pair("hash stake", m.hashStake.GetHex()));       // Confirmations
@@ -2677,7 +2677,7 @@ UniValue listzerocoinamounts(const UniValue& params, bool fHelp)
     EnsureWalletIsUnlocked(true);
 
     CWalletDB walletdb(pwalletMain->strWalletFile);
-    set<CMintMeta> setMints = pwalletMain->zALGTracker->ListMints(true, true, true);
+    set<CMintMeta> setMints = pwalletMain->zpivTracker->ListMints(true, true, true);
 
     std::map<libzerocoin::CoinDenomination, CAmount> spread;
     for (const auto& denom : libzerocoin::zerocoinDenomList)
@@ -2895,7 +2895,7 @@ UniValue spendzerocoin(const UniValue& params, bool fHelp)
 
     vector<CZerocoinMint> vMintsSelected;
 
-    return DoZALGSpend(nAmount, fMintChange, fMinimizeChange, vMintsSelected, address_str);
+    return DoZpivSpend(nAmount, fMintChange, fMinimizeChange, vMintsSelected, address_str);
 }
 
 
@@ -2989,11 +2989,11 @@ UniValue spendzerocoinmints(const UniValue& params, bool fHelp)
             throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ALG address");
     }
 
-    return DoZALGSpend(nAmount, false, true, vMintsSelected, address_str);
+    return DoZpivSpend(nAmount, false, true, vMintsSelected, address_str);
 }
 
 
-extern UniValue DoZALGSpend(const CAmount nAmount, bool fMintChange, bool fMinimizeChange, vector<CZerocoinMint>& vMintsSelected, std::string address_str)
+extern UniValue DoZpivSpend(const CAmount nAmount, bool fMintChange, bool fMinimizeChange, vector<CZerocoinMint>& vMintsSelected, std::string address_str)
 {
     int64_t nTimeStart = GetTimeMillis();
     CBitcoinAddress address = CBitcoinAddress(); // Optional sending address. Dummy initialization here.
@@ -3085,8 +3085,8 @@ UniValue resetmintzerocoin(const UniValue& params, bool fHelp)
     LOCK2(cs_main, pwalletMain->cs_wallet);
 
     CWalletDB walletdb(pwalletMain->strWalletFile);
-    CzALGTracker* zALGTracker = pwalletMain->zALGTracker.get();
-    set<CMintMeta> setMints = zALGTracker->ListMints(false, false, true);
+    CzALGTracker* zpivTracker = pwalletMain->zpivTracker.get();
+    set<CMintMeta> setMints = zpivTracker->ListMints(false, false, true);
     vector<CMintMeta> vMintsToFind(setMints.begin(), setMints.end());
     vector<CMintMeta> vMintsMissing;
     vector<CMintMeta> vMintsToUpdate;
@@ -3097,14 +3097,14 @@ UniValue resetmintzerocoin(const UniValue& params, bool fHelp)
     // update the meta data of mints that were marked for updating
     UniValue arrUpdated(UniValue::VARR);
     for (CMintMeta meta : vMintsToUpdate) {
-        zALGTracker->UpdateState(meta);
+        zpivTracker->UpdateState(meta);
         arrUpdated.push_back(meta.hashPubcoin.GetHex());
     }
 
     // delete any mints that were unable to be located on the blockchain
     UniValue arrDeleted(UniValue::VARR);
     for (CMintMeta mint : vMintsMissing) {
-        zALGTracker->Archive(mint);
+        zpivTracker->Archive(mint);
         arrDeleted.push_back(mint.hashPubcoin.GetHex());
     }
 
@@ -3138,8 +3138,8 @@ UniValue resetspentzerocoin(const UniValue& params, bool fHelp)
     LOCK2(cs_main, pwalletMain->cs_wallet);
 
     CWalletDB walletdb(pwalletMain->strWalletFile);
-    CzALGTracker* zALGTracker = pwalletMain->zALGTracker.get();
-    set<CMintMeta> setMints = zALGTracker->ListMints(false, false, false);
+    CzALGTracker* zpivTracker = pwalletMain->zpivTracker.get();
+    set<CMintMeta> setMints = zpivTracker->ListMints(false, false, false);
     list<CZerocoinSpend> listSpends = walletdb.ListSpentCoins();
     list<CZerocoinSpend> listUnconfirmedSpends;
 
@@ -3161,7 +3161,7 @@ UniValue resetspentzerocoin(const UniValue& params, bool fHelp)
     for (CZerocoinSpend spend : listUnconfirmedSpends) {
         for (auto& meta : setMints) {
             if (meta.hashSerial == GetSerialHash(spend.GetSerial())) {
-                zALGTracker->SetPubcoinNotUsed(meta.hashPubcoin);
+                zpivTracker->SetPubcoinNotUsed(meta.hashPubcoin);
                 walletdb.EraseZerocoinSpendSerialEntry(spend.GetSerial());
                 RemoveSerialFromDB(spend.GetSerial());
                 UniValue obj(UniValue::VOBJ);
@@ -3276,8 +3276,8 @@ UniValue exportzerocoins(const UniValue& params, bool fHelp)
     if (params.size() == 2)
         denomination = libzerocoin::IntToZerocoinDenomination(params[1].get_int());
 
-    CzALGTracker* zALGTracker = pwalletMain->zALGTracker.get();
-    set<CMintMeta> setMints = zALGTracker->ListMints(!fIncludeSpent, false, false);
+    CzALGTracker* zpivTracker = pwalletMain->zpivTracker.get();
+    set<CMintMeta> setMints = zpivTracker->ListMints(!fIncludeSpent, false, false);
 
     UniValue jsonList(UniValue::VARR);
     for (const CMintMeta& meta : setMints) {
@@ -3392,7 +3392,7 @@ UniValue importzerocoins(const UniValue& params, bool fHelp)
         CZerocoinMint mint(denom, bnValue, bnRandom, bnSerial, fUsed, nVersion, &privkey);
         mint.SetTxHash(txid);
         mint.SetHeight(nHeight);
-        pwalletMain->zALGTracker->Add(mint, true);
+        pwalletMain->zpivTracker->Add(mint, true);
         count++;
         nValue += libzerocoin::ZerocoinDenominationToAmount(denom);
     }
@@ -3454,23 +3454,23 @@ UniValue reconsiderzerocoins(const UniValue& params, bool fHelp)
     return arrRet;
 }
 
-UniValue setzALGseed(const UniValue& params, bool fHelp)
+UniValue setzpivseed(const UniValue& params, bool fHelp)
 {
     if(fHelp || params.size() != 1)
         throw runtime_error(
-            "setzALGseed \"seed\"\n"
-            "\nSet the wallet's deterministic zALG seed to a specific value.\n" +
+            "setzpivseed \"seed\"\n"
+            "\nSet the wallet's deterministic zpiv seed to a specific value.\n" +
             HelpRequiringPassphrase() + "\n"
 
             "\nArguments:\n"
-            "1. \"seed\"        (string, required) The deterministic zALG seed.\n"
+            "1. \"seed\"        (string, required) The deterministic zpiv seed.\n"
 
             "\nResult\n"
             "\"success\" : b,  (boolean) Whether the seed was successfully set.\n"
 
             "\nExamples\n" +
-            HelpExampleCli("setzALGseed", "63f793e7895dd30d99187b35fbfb314a5f91af0add9e0a4e5877036d1e392dd5") +
-            HelpExampleRpc("setzALGseed", "63f793e7895dd30d99187b35fbfb314a5f91af0add9e0a4e5877036d1e392dd5"));
+            HelpExampleCli("setzpivseed", "63f793e7895dd30d99187b35fbfb314a5f91af0add9e0a4e5877036d1e392dd5") +
+            HelpExampleRpc("setzpivseed", "63f793e7895dd30d99187b35fbfb314a5f91af0add9e0a4e5877036d1e392dd5"));
 
     EnsureWalletIsUnlocked();
 
@@ -3488,11 +3488,11 @@ UniValue setzALGseed(const UniValue& params, bool fHelp)
     return ret;
 }
 
-UniValue getzALGseed(const UniValue& params, bool fHelp)
+UniValue getzpivseed(const UniValue& params, bool fHelp)
 {
     if(fHelp || !params.empty())
         throw runtime_error(
-            "getzALGseed\n"
+            "getzpivseed\n"
             "\nCheck archived zALG list to see if any mints were added to the blockchain.\n" +
             HelpRequiringPassphrase() + "\n"
 
@@ -3500,7 +3500,7 @@ UniValue getzALGseed(const UniValue& params, bool fHelp)
             "\"seed\" : s,  (string) The deterministic zALG seed.\n"
 
             "\nExamples\n" +
-            HelpExampleCli("getzALGseed", "") + HelpExampleRpc("getzALGseed", ""));
+            HelpExampleCli("getzpivseed", "") + HelpExampleRpc("getzpivseed", ""));
 
     EnsureWalletIsUnlocked();
 
@@ -3562,10 +3562,10 @@ UniValue generatemintlist(const UniValue& params, bool fHelp)
     return arrRet;
 }
 
-UniValue dzALGstate(const UniValue& params, bool fHelp) {
+UniValue dzpivstate(const UniValue& params, bool fHelp) {
     if (fHelp || params.size() != 0)
         throw runtime_error(
-                "dzALGstate\n"
+                "dzpivstate\n"
                         "\nThe current state of the mintpool of the deterministic zALG wallet.\n" +
                 HelpRequiringPassphrase() + "\n"
 
@@ -3576,7 +3576,7 @@ UniValue dzALGstate(const UniValue& params, bool fHelp) {
     UniValue obj(UniValue::VOBJ);
     int nCount, nCountLastUsed;
     zwallet->GetState(nCount, nCountLastUsed);
-    obj.push_back(Pair("dzALG_count", nCount));
+    obj.push_back(Pair("dzpiv_count", nCount));
     obj.push_back(Pair("mintpool_count", nCountLastUsed));
 
     return obj;
@@ -3613,11 +3613,11 @@ void static SearchThread(CzALGWallet* zwallet, int nCountStart, int nCountEnd)
     }
 }
 
-UniValue searchdzALG(const UniValue& params, bool fHelp)
+UniValue searchdzpiv(const UniValue& params, bool fHelp)
 {
     if(fHelp || params.size() != 3)
         throw runtime_error(
-            "searchdzALG\n"
+            "searchdzpiv\n"
             "\nMake an extended search for deterministically generated zALG that have not yet been recognized by the wallet.\n" +
             HelpRequiringPassphrase() + "\n"
 
@@ -3627,7 +3627,7 @@ UniValue searchdzALG(const UniValue& params, bool fHelp)
             "3. \"threads\"     (numeric) How many threads should this operation consume.\n"
 
             "\nExamples\n" +
-            HelpExampleCli("searchdzALG", "1, 100, 2") + HelpExampleRpc("searchdzALG", "1, 100, 2"));
+            HelpExampleCli("searchdzpiv", "1, 100, 2") + HelpExampleRpc("searchdzpiv", "1, 100, 2"));
 
     EnsureWalletIsUnlocked();
 
@@ -3643,7 +3643,7 @@ UniValue searchdzALG(const UniValue& params, bool fHelp)
 
     CzALGWallet* zwallet = pwalletMain->zwalletMain;
 
-    boost::thread_group* dzALGThreads = new boost::thread_group();
+    boost::thread_group* dzpivThreads = new boost::thread_group();
     int nRangePerThread = nRange / nThreads;
 
     int nPrevThreadEnd = nCount - 1;
@@ -3651,12 +3651,12 @@ UniValue searchdzALG(const UniValue& params, bool fHelp)
         int nStart = nPrevThreadEnd + 1;;
         int nEnd = nStart + nRangePerThread;
         nPrevThreadEnd = nEnd;
-        dzALGThreads->create_thread(boost::bind(&SearchThread, zwallet, nStart, nEnd));
+        dzpivThreads->create_thread(boost::bind(&SearchThread, zwallet, nStart, nEnd));
     }
 
-    dzALGThreads->join_all();
+    dzpivThreads->join_all();
 
-    zwallet->RemoveMintsFromPool(pwalletMain->zALGTracker->GetSerialHashes());
+    zwallet->RemoveMintsFromPool(pwalletMain->zpivTracker->GetSerialHashes());
     zwallet->SyncWithChain(false);
 
     //todo: better response
@@ -3758,7 +3758,7 @@ UniValue spendrawzerocoin(const UniValue& params, bool fHelp)
     vector<CZerocoinMint> vMintsSelected = {mint};
     CAmount nAmount = mint.GetDenominationAsAmount();
 
-    return DoZALGSpend(nAmount, false, true, vMintsSelected, address_str);
+    return DoZpivSpend(nAmount, false, true, vMintsSelected, address_str);
 }
 
 UniValue clearspendcache(const UniValue& params, bool fHelp)
@@ -3774,14 +3774,14 @@ UniValue clearspendcache(const UniValue& params, bool fHelp)
 
     EnsureWalletIsUnlocked();
 
-    CzALGTracker* zALGTracker = pwalletMain->zALGTracker.get();
+    CzALGTracker* zpivTracker = pwalletMain->zpivTracker.get();
 
     {
         int nTries = 0;
         while (nTries < 100) {
-            TRY_LOCK(zALGTracker->cs_spendcache, fLocked);
+            TRY_LOCK(zpivTracker->cs_spendcache, fLocked);
             if (fLocked) {
-                if (zALGTracker->ClearSpendCache()) {
+                if (zpivTracker->ClearSpendCache()) {
                     fClearSpendCache = true;
                     CWalletDB walletdb("precomputes.dat", "cr+");
                     walletdb.EraseAllPrecomputes();

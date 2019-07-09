@@ -21,7 +21,7 @@ Users will have a grace period to update their clients before versions prior to 
 How to Upgrade
 ==============
 
-If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/BitalGo-Qt (on Mac) or BitalGod/BitalGo-qt (on Linux).
+If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/ALG-Qt (on Mac) or BitalGod/BitalGo-qt (on Linux).
 
 
 Compatibility
@@ -77,7 +77,7 @@ the code changes and accompanying discussion, both the pull request and
 git merge commit are mentioned.
 
 ### P2P Protocol and Network Code
-- #294 `27c0943` Add additional checks for txid for zALG spend. (presstab)
+- #294 `27c0943` Add additional checks for txid for zpiv spend. (presstab)
 - #301 `b8392cd` Refactor zPiv tx counting code. Add a final check in ConnectBlock() (presstab)
 - #306 `77dd55c` [Core] Don't send not-validated blocks (Mrs-X)
 - #312 `5d79bea` [Main] Update last checkpoint data (Fuzzbawls)

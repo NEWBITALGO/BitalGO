@@ -1,5 +1,5 @@
 ---
-name: "BitalGo-win-2.0.0"
+name: "BitalGo-win-1.0.1"
 enable_cache: true
 suites:
 - "bionic"
@@ -23,7 +23,7 @@ packages:
 - "python"
 - "rename"
 remotes:
-- "url": "https://github.com/NEWBITALGO/BitalGO.git"
+- "url": "https://github.com/StakingLab/BitalGo-coin.git"
   "dir": "BitalGo"
 files: []
 script: |

@@ -253,10 +253,10 @@ QT_TRANSLATE_NOOP("BitalGo-core", ""
 QT_TRANSLATE_NOOP("BitalGo-core", ""
 "You must specify a masternodeprivkey in the configuration. Please see "
 "documentation for help."),
-QT_TRANSLATE_NOOP("BitalGo-core", "(9436 could be used only on mainnet)"),
+QT_TRANSLATE_NOOP("BitalGo-core", "(33330 could be used only on mainnet)"),
 QT_TRANSLATE_NOOP("BitalGo-core", "(default: %s)"),
 QT_TRANSLATE_NOOP("BitalGo-core", "(default: 1)"),
-QT_TRANSLATE_NOOP("BitalGo-core", "(must be 9436 for mainnet)"),
+QT_TRANSLATE_NOOP("BitalGo-core", "(must be 33330 for mainnet)"),
 QT_TRANSLATE_NOOP("BitalGo-core", "<category> can be:"),
 QT_TRANSLATE_NOOP("BitalGo-core", "Accept command line and JSON-RPC commands"),
 QT_TRANSLATE_NOOP("BitalGo-core", "Accept connections from outside (default: 1 if no -proxy or -connect)"),

@@ -1106,8 +1106,8 @@ Višestruko slanje: %1</translation>
         <translation>Ova oznaka postaje crvena ako neki primatelj prima iznos manji od %1.</translation>
     </message>
     <message>
-        <source>Can vary +/- %1 uALG per input.</source>
-        <translation>Može varirati +/- %1 uALG po unosu.</translation>
+        <source>Can vary +/- %1 upiv per input.</source>
+        <translation>Može varirati +/- %1 upiv po unosu.</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -5047,7 +5047,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Morate odrediti masternodeprivkey u konfiguraciji. Za pomoć pogledajte dokumentaciju.</translation>
     </message>
     <message>
-        <source>(9436 could be used only on mainnet)</source>
+        <source>(33330 could be used only on mainnet)</source>
         <translation>(51472 se može koristiti samo na mainnetu)</translation>
     </message>
     <message>

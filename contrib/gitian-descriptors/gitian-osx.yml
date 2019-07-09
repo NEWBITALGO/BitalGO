@@ -1,5 +1,5 @@
 ---
-name: "BitalGo-osx-2.0.1"
+name: "BitalGo-osx-1.0.1"
 enable_cache: true
 suites:
 - "bionic"
@@ -28,7 +28,7 @@ packages:
 - "python-setuptools"
 - "fonts-tuffy"
 remotes:
-- "url": "https://github.com/NEWBITALGO/BitalGO.git"
+- "url": "https://github.com/StakingLab/BitalGo-coin.git"
   "dir": "BitalGo"
 files:
 - "MacOSX10.11.sdk.tar.gz"

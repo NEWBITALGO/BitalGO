@@ -15,7 +15,7 @@ While updating from v3.2.0 is not required, it is recommended, especially for an
 How to Upgrade
 ==============
 
-If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/BitalGo-Qt (on Mac) or BitalGod/BitalGo-qt (on Linux).
+If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/ALG-Qt (on Mac) or BitalGod/BitalGo-qt (on Linux).
 
 
 Compatibility
@@ -47,7 +47,7 @@ A GUI only crash when recalculating zALG data (mints/spends/supply) has been fix
 
 ### macOS installer mounting
 
-The macOS installer image (`.dmg` file) had an issue with it's stylesheet that caused an error after mounting the image. Affected macOS users will now see the expected behavior of a finder window appearing after mounting, allowing drag-n-drop installation of the BitalGo-Qt.app
+The macOS installer image (`.dmg` file) had an issue with it's stylesheet that caused an error after mounting the image. Affected macOS users will now see the expected behavior of a finder window appearing after mounting, allowing drag-n-drop installation of the ALG-Qt.app
 
 ### macOS "Pink Pinstripes"
 
