@@ -55,7 +55,7 @@ static const int MAX_URI_LENGTH = 255;
 
 #define QAPP_ORG_NAME "ALG"
 #define QAPP_ORG_DOMAIN "BitalGo.org"
-#define QAPP_APP_NAME_DEFAULT "ALG-Qt"
-#define QAPP_APP_NAME_TESTNET "ALG-Qt-testnet"
+#define QAPP_APP_NAME_DEFAULT "BitalGo-Qt"
+#define QAPP_APP_NAME_TESTNET "BitalGo-Qt-testnet"
 
 #endif // BITCOIN_QT_GUICONSTANTS_H

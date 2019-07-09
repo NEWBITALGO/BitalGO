@@ -44,6 +44,7 @@ share/setup.nsi
 share/qt/Info.plist
 contrib/devtools/split-debug.sh
 
+ALG-Qt.app/
 BitalGo-Qt.app/
 src/BitalGo-cli
 src/BitalGo-tx

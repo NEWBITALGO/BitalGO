@@ -15,7 +15,7 @@ Users updating from a previous version after Tuesday, May 8, 2018 12:00:00 AM GM
 How to Upgrade
 ==============
 
-If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/ALG-Qt (on Mac) or BitalGod/BitalGo-qt (on Linux).
+If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/BitalGo-Qt (on Mac) or BitalGod/BitalGo-qt (on Linux).
 
 
 Compatibility
@@ -251,8 +251,8 @@ Minor Enhancements
 -	Enforced v1 zALG spends to require a security level of 100
 -	Updates to zALG spends to avoid segfaults
 -	Updates to configuration will now reflect on the privacy tab
--	Fixed a  bug that would not start masternodes from the ALG-Qt masternodes tab
--	Updated ALG-Qt tooltips
+-	Fixed a  bug that would not start masternodes from the BitalGo-Qt masternodes tab
+-	Updated BitalGo-Qt tooltips
 -	Icon added to the wallet GUI to reflect the status of autominting (active / inactive)
 -	Updated errors causing the blockchain to corrupt when experiencing unexpected wallet shutdowns
 -	Updated RPC help outputs & removed the deprecated obfuscation. 

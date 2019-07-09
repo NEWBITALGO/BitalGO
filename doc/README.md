@@ -22,7 +22,7 @@ Unpack the files into a directory, and then run BitalGo-qt.exe.
 
 ### OSX
 
-Drag ALG-Qt to your applications folder, and then run ALG-Qt.
+Drag BitalGo-Qt to your applications folder, and then run BitalGo-Qt.
 
 ### Need Help?
 
