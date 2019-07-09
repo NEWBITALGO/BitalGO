@@ -8,13 +8,3 @@ BitalGo Coin (ALG) is a sustainable cryptocurrency modeled after Satoshi Nakamot
 - Decentralized blockchain voting providing for consensus based advancement of the current Masternode
   technology used to secure the network and provide the above features, each Masternode is secured
   with a collateral of 2,000 ALG.
-
-More information at [BitalGo.io](http://www.BitalGo.io)
-
-Please reach out at awareness@BitalGo.io
-
-### Coin Specs
-| Block Time                  | 60 Seconds      |
-| Max Coin Supply (PoW Phase) | 400,000 ALG    |
-| Max Coin Supply (PoS Phase) | 20,999,999 ALG |
-| Premine                     | 400,000 ALG    |
