@@ -1,6 +1,8 @@
 BitalGo Coin integration/staging repository
 =================================================
-[![Build Status](https://travis-ci.org/BitalGo/BitalGo.svg?branch=master)](https://travis-ci.org/BitalGo/BitalGo) ![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
+ ![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
+![splash](https://user-images.githubusercontent.com/37994033/61985270-71e1db00-afd6-11e9-96b7-6b9e4fe85f58.png)
+
 
 BitalGo Coin (ALG) is a sustainable cryptocurrency modeled after Satoshi Nakamoto’s vision for Bitcoin. It is a decentralized, peer-to-peer transactional currency designed to offer a solution to the problem posed by the exponential increase in energy consumed by Bitcoin and other proof-of-work currencies. Proof-of-work mining is environmentally unsustainable due to the electricity used by high-powered mining hardware.
 
