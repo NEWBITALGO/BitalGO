@@ -5047,7 +5047,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Morate odrediti masternodeprivkey u konfiguraciji. Za pomoć pogledajte dokumentaciju.</translation>
     </message>
     <message>
-        <source>(33330 could be used only on mainnet)</source>
+        <source>(9436 could be used only on mainnet)</source>
         <translation>(51472 se može koristiti samo na mainnetu)</translation>
     </message>
     <message>
